@@ -1,0 +1,55 @@
+<html>
+
+    <body>
+    
+        <h2>tabs</h2>
+        <a href="#products">products</a>
+        <a href="#users">users</a>
+        
+        <div id="main">
+            
+        </div>
+    </body>
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded",()=>{
+
+        window.addEventListener('hashchange', render);
+
+    });
+    const render=async()=>{
+        const hash = location.hash.replace('#', '');
+        console.log(hash);
+        const res = await fetch(hash);
+        const html=await res.text();
+        
+        document.querySelector("#main").innerHTML=html;
+
+        if(hash==='products'){
+           
+            const res=await fetch("/products.json");
+            const products=await res.json();
+            console.log(products);
+            document.querySelector("#ulProducts").innerHTML="";
+            products.forEach(element => {
+                let li=document.createElement("li");
+                li.innerText=element.name;
+                document.querySelector("#ulProducts").appendChild(li);
+            });        
+            
+        }else if(hash=='users'){
+            
+            const res=await fetch("/users.json");
+            const products=await res.json();
+            console.log(products);
+            document.querySelector("#ulUsers").innerHTML="";
+            products.forEach(element => {
+                let li=document.createElement("li");
+                li.innerText=element.name;
+                document.querySelector("#ulUsers").appendChild(li);
+            });
+
+        }
+
+    }
+</script>
