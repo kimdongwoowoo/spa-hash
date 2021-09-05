@@ -18,13 +18,18 @@
 
     });
     const render=async()=>{
-        const hash = location.hash.replace('#', '');
-        console.log(hash);
-        const res = await fetch(hash);
-        const html=await res.text();
         
+        //hash를 이용하여 history 관리
+        const hash = location.hash.replace('#', '');
+        
+        console.log(hash);
+        
+        //SPA 비동기 렌더링
+        const res = await fetch(hash); //get html
+        const html=await res.text();
         document.querySelector("#main").innerHTML=html;
 
+        //get data
         if(hash==='products'){
            
             const res=await fetch("/products.json");
